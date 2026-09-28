@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中学体育游戏教学法 · 专项分类整理</title>
+<meta name="description" content="中学体育游戏教学法专项分类整理：9 章专项分类、54 条参考文献，面向中学体育教师备课检索的纯静态知识站。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
+
+<header class="topbar">
+  <button type="button" class="topbar__btn" id="menuBtn" aria-expanded="false" aria-controls="sidebar">目录</button>
+  <span class="topbar__title">中学体育游戏教学法</span>
+  <span class="topbar__lane" id="topbarLane"></span>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="站点目录">
+    <div class="sidebar__inner">
+      <p class="sidebar__brand">中学体育游戏教学法<span>专项分类整理</span></p>
+
+      <div class="search">
+        <label class="sr-only" for="searchInput">全站检索</label>
+        <input type="search" id="searchInput" placeholder="检索条目 / 文献：垫球、SWOT、RPE" autocomplete="off" aria-describedby="searchHint">
+        <p class="search__hint" id="searchHint">输入即检索全站条目与文献</p>
+        <div class="search__results" id="searchResults" hidden></div>
+      </div>
+
+      <div class="nav-groups" id="navGroups"></div>
+
+      <p class="sidebar__foot">文献库《游戏教学法 体育 中学.txt》<b>233</b> 篇提炼</p>
+    </div>
+  </nav>
+
+  <main class="content" id="content">
+    <article class="article" id="article"></article>
+    <noscript><p class="prose">本站为纯静态站点，需要启用 JavaScript 才能浏览。</p></noscript>
+  </main>
+
+  <aside class="toc" aria-label="本页目录">
+    <p class="toc__title">本页目录</p>
+    <ol class="toc__list" id="tocList"></ol>
+  </aside>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

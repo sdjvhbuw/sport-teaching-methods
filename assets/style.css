@@ -1,0 +1,466 @@
+/* =========================================================
+   中学体育游戏教学法 · 专项分类整理   样式表
+   设计定位：教学资料 + 运动场；信息密度优先、检索优先
+   ========================================================= */
+
+:root{
+  --field:#12332A;
+  --field-2:#1D4A3C;
+  --mark:#D8F14B;
+  --paper:#F7F8F4;
+  --card:#FFFFFF;
+  --line:#DCDED5;
+  --ink:#1A1F1C;
+  --ink-2:#6E8279;
+  --alert:#C4472F;
+  --font-display:"Source Han Serif SC","Noto Serif SC","Songti SC","SimSun",serif;
+  --font-body:"Microsoft YaHei UI","Segoe UI","PingFang SC",sans-serif;
+  --font-num:"Cascadia Code","JetBrains Mono",Consolas,monospace;
+  --gutter:40px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{scroll-padding-top:28px}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font:400 17px/1.85 var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit}
+
+:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* ---------------- 顶部滚动进度条 ---------------- */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:60;
+  background:transparent;pointer-events:none;
+}
+.progress__bar{
+  display:block;height:100%;width:100%;background:var(--mark);
+  transform:scaleX(0);transform-origin:0 50%;
+}
+
+/* ---------------- 移动端顶栏 ---------------- */
+.topbar{display:none}
+
+/* ---------------- 三栏布局 ---------------- */
+.layout{
+  display:grid;
+  grid-template-columns:240px minmax(0,1fr) 180px;
+  align-items:start;
+}
+
+/* ---------------- 跑道式侧栏 ---------------- */
+.sidebar{
+  background:var(--field);
+  color:#DFE7E2;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  border-right:1px solid var(--field-2);
+}
+.sidebar__inner{display:flex;flex-direction:column;min-height:100%;padding:26px 0 28px}
+
+.sidebar__brand{
+  margin:0 20px 20px;
+  font-family:var(--font-display);
+  font-size:1.0625rem;
+  line-height:1.5;
+  color:#FFFFFF;
+}
+.sidebar__brand span{
+  display:block;
+  font-family:var(--font-body);
+  font-size:.8125rem;
+  color:#9DB3A9;
+}
+
+.search{position:relative;padding:0 16px;margin-bottom:22px}
+.search input{
+  width:100%;
+  background:#0D2821;
+  border:1px solid var(--field-2);
+  border-radius:2px;
+  color:#EAF0EC;
+  font:400 .9375rem/1.5 var(--font-body);
+  padding:9px 10px;
+}
+.search input::placeholder{color:#7E948B}
+.search input:focus{outline:2px solid var(--mark);outline-offset:1px;border-color:var(--mark)}
+.search__hint{margin:6px 0 0;font-size:.8125rem;color:#8AA096}
+
+.search__results{
+  position:absolute;
+  top:100%;
+  left:16px;
+  right:16px;
+  z-index:55;
+  max-height:64vh;
+  overflow-y:auto;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:2px;
+}
+.hit-count{margin:0;padding:8px 12px;font-size:.8125rem;color:var(--ink-2);border-bottom:1px solid var(--line)}
+.hit{display:block;padding:9px 12px;text-decoration:none;border-bottom:1px solid var(--line)}
+.hit:hover{background:#EFF2EA}
+.hit__meta{display:block;font-size:.8125rem;color:var(--field-2)}
+.hit__text{display:block;font-size:.9375rem;line-height:1.6}
+.hit mark{background:var(--mark);color:var(--ink)}
+.hit--empty{margin:0;padding:10px 12px;font-size:.9375rem;color:var(--ink)}
+
+.nav-group{margin-bottom:18px}
+.nav-group__title{margin:0;padding:0 20px 6px;font-size:.8125rem;color:#9DB3A9}
+
+.nav-item{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  padding:7px 16px 7px 15px;
+  border-left:3px solid var(--field-2);
+  color:#D7E1DB;
+  text-decoration:none;
+  transition:background-color .12s linear,border-color .2s ease-out;
+}
+.nav-item:hover{background:var(--field-2)}
+.nav-item[aria-current="true"]{
+  border-left-color:var(--mark);
+  background:rgba(255,255,255,.05);
+  color:#FFFFFF;
+}
+.lane-no{flex:none;min-width:58px;font-family:var(--font-num);font-size:.8125rem;color:#8AA096}
+.lane-no--none{min-width:58px}
+.nav-item[aria-current="true"] .lane-no{color:var(--mark)}
+.lane-name{font-size:.9375rem}
+
+.sidebar__foot{
+  margin:auto 20px 0;
+  padding-top:18px;
+  font-size:.8125rem;
+  color:#8AA096;
+  border-top:1px solid var(--field-2);
+}
+.sidebar__foot b{font-family:var(--font-num);color:var(--mark);font-weight:400}
+
+/* ---------------- 内容区 ---------------- */
+.content{min-width:0;padding:56px var(--gutter) 120px}
+.article{max-width:760px;margin:0 auto}
+
+.sec-head{padding-bottom:20px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+.sec-lane{margin:0 0 8px;font-family:var(--font-num);font-size:.8125rem;color:var(--ink-2)}
+.sec-title{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:2.5rem;
+  font-weight:600;
+  line-height:1.3;
+}
+
+.block{margin:0 0 46px}
+.sub-block{margin:0 0 34px}
+
+.h2{
+  margin:0 0 16px;
+  font-family:var(--font-display);
+  font-size:1.75rem;
+  font-weight:600;
+  line-height:1.4;
+  scroll-margin-top:28px;
+}
+.h2 .num{position:relative;margin-right:.45em;font-family:var(--font-num);font-size:1.375rem;font-weight:400}
+.h2 .num::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-3px;
+  height:3px;
+  background:var(--mark);
+}
+.h3{
+  margin:0 0 12px;
+  font-family:var(--font-display);
+  font-size:1.375rem;
+  font-weight:600;
+  line-height:1.45;
+  scroll-margin-top:28px;
+}
+.block--group > .h2{margin-bottom:24px}
+
+.prose{margin:0 0 16px;max-width:68ch}
+
+.block--group > .prose{color:var(--ink);max-width:68ch}
+
+/* ---------------- 列表 ---------------- */
+.list{margin:0 0 16px;padding-left:1.6em;max-width:68ch}
+.list li{margin:0 0 10px}
+.list li > a{text-decoration:none}
+.list li > a:hover{color:var(--field-2);text-decoration:underline}
+ul.list{list-style:square}
+ul.list.light{list-style:square}
+ol.list{list-style:decimal}
+.list--principles li::marker{color:var(--field-2);font-family:var(--font-num)}
+.list--evidence li::marker{color:var(--field-2)}
+.list--alert{list-style:none;padding-left:0;max-width:100%}
+
+/* 注意事项 / 风险 */
+.list--alert > li{
+  border-left:3px solid var(--alert);
+  background:rgba(196,71,47,.055);
+  padding:10px 14px;
+  margin:0 0 10px;
+}
+
+/* 性别效应提示 */
+.sex-note{
+  display:block;
+  margin-top:8px;
+  padding:8px 12px;
+  border-left:3px solid var(--alert);
+  background:rgba(196,71,47,.055);
+  color:var(--alert);
+  font-size:.9375rem;
+  line-height:1.75;
+}
+
+/* ---------------- 引文块 ---------------- */
+.quote{
+  margin:0 0 18px;
+  padding:14px 18px;
+  border-left:3px solid var(--field-2);
+  background:rgba(29,74,60,.045);
+  max-width:68ch;
+}
+.quote p{margin:0 0 8px}
+.quote p:last-child{margin-bottom:0}
+
+/* ---------------- 表格 ---------------- */
+.table-wrap{
+  width:calc(100% + var(--gutter) * 2);
+  margin:0 calc(-1 * var(--gutter)) 10px;
+  overflow-x:auto;
+  background:var(--card);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+table{width:100%;min-width:560px;border-collapse:collapse;font-size:.9375rem}
+th,td{
+  padding:11px 14px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+  line-height:1.7;
+}
+thead th{
+  background:#EFF2EA;
+  font-weight:600;
+  color:var(--ink);
+  white-space:nowrap;
+  border-bottom:1px solid var(--field-2);
+}
+tbody tr{transition:background-color .12s linear}
+tbody tr:hover{background:#F2F5EC}
+tbody tr:last-child td{border-bottom:0}
+
+.scroll-hint{display:none;margin:0 0 18px;font-size:.8125rem;color:var(--ink-2)}
+
+/* ---------------- 引用编号 ---------------- */
+.ref-link{
+  display:inline-block;
+  padding:0 3px;
+  border-radius:2px;
+  background:var(--mark);
+  color:var(--ink);
+  font-family:var(--font-num);
+  font-size:.8125rem;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.ref-link:hover{outline:1px solid var(--ink)}
+
+/* ---------------- 实施流程 ---------------- */
+.flow{
+  position:relative;
+  margin:0 0 14px;
+  padding:0 0 0 24px;
+  list-style:none;
+  max-width:68ch;
+}
+.flow::before{
+  content:"";
+  position:absolute;
+  left:5px;top:8px;bottom:12px;
+  width:2px;
+  background:var(--field-2);
+}
+.flow li{position:relative;padding:0 0 14px}
+.flow li::before{
+  content:"";
+  position:absolute;
+  left:-24px;top:.78em;
+  width:10px;height:10px;
+  margin-top:-5px;
+  background:var(--paper);
+  border:2px solid var(--field-2);
+  border-radius:50%;
+}
+.flow li:last-child::before{background:var(--mark);border-color:var(--field-2)}
+.flow__foot{margin:0 0 18px;color:var(--field-2);font-size:.9375rem}
+
+/* ---------------- 参考文献 ---------------- */
+.reflist{list-style:none;margin:0;padding:0}
+.ref-item{
+  display:flex;
+  gap:12px;
+  padding:14px 0;
+  border-top:1px solid var(--line);
+  scroll-margin-top:28px;
+}
+.ref-num{
+  flex:none;
+  align-self:flex-start;
+  padding:0 4px;
+  border-radius:2px;
+  background:var(--mark);
+  color:var(--ink);
+  font-family:var(--font-num);
+  font-size:.9375rem;
+  line-height:1.7;
+}
+.ref-body{min-width:0}
+.ref-title{display:block;font-weight:600}
+.ref-quote{display:block;margin-top:4px;color:var(--field-2);font-size:.9375rem;line-height:1.8}
+
+/* ---------------- 本页目录 ---------------- */
+.toc{
+  position:sticky;
+  top:0;
+  max-height:100vh;
+  overflow-y:auto;
+  padding:56px 24px 40px 0;
+  font-size:.8125rem;
+}
+.toc__title{margin:0 0 10px;font-size:.8125rem;color:var(--ink-2)}
+.toc__list{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.toc__item a{
+  display:block;
+  margin-left:-2px;
+  padding:5px 0 5px 10px;
+  border-left:2px solid transparent;
+  color:var(--ink);
+  text-decoration:none;
+  line-height:1.6;
+}
+.toc__item--3 a{padding-left:20px;color:var(--field-2)}
+.toc__item a:hover{border-left-color:var(--field-2)}
+.toc__item a[aria-current="true"]{border-left-color:var(--mark);font-weight:600;color:var(--ink)}
+
+/* ---------------- 命中高亮 ---------------- */
+.is-target{animation:flash 2.2s ease-out 1}
+@keyframes flash{
+  0%{background-color:var(--mark)}
+  100%{background-color:transparent}
+}
+
+/* ---------------- 首屏与切换动效 ---------------- */
+@keyframes rise{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+@keyframes rise-sm{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+.article.is-boot > .sec-head,
+.article.is-boot > .block{animation:rise .34s ease-out both}
+.article.is-switch{animation:rise-sm .18s ease-out both}
+
+/* ---------------- 遮罩（移动端抽屉） ---------------- */
+.scrim{display:none}
+
+/* =========================================================
+   响应式
+   ========================================================= */
+@media (max-width:1079px){
+  .layout{grid-template-columns:240px minmax(0,1fr)}
+  .toc{display:none}
+}
+
+@media (max-width:768px){
+  :root{--gutter:18px}
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    padding:10px 14px;
+    background:var(--field);
+    color:#EAF0EC;
+  }
+  .topbar__btn{
+    padding:8px 12px;
+    border:1px solid var(--field-2);
+    border-radius:2px;
+    background:transparent;
+    color:#EAF0EC;
+    font:400 .875rem/1 var(--font-body);
+  }
+  .topbar__title{font-family:var(--font-display);font-size:1rem}
+  .topbar__lane{margin-left:auto;font-family:var(--font-num);font-size:.8125rem;color:var(--mark)}
+
+  .layout{display:block}
+
+  .sidebar{
+    position:fixed;
+    top:0;left:0;bottom:0;
+    width:84%;
+    max-width:320px;
+    height:100%;
+    z-index:70;
+    transform:translateX(-100%);
+    transition:transform .2s ease-out;
+  }
+  body.nav-open .sidebar{transform:none}
+
+  .scrim{
+    display:block;
+    position:fixed;
+    inset:0;
+    z-index:65;
+    background:rgba(18,51,42,.45);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .2s ease-out,visibility .2s;
+  }
+  body.nav-open .scrim{opacity:1;visibility:visible}
+
+  .content{padding:22px var(--gutter) 88px}
+  .sec-title{font-size:1.75rem}
+  .h2{font-size:1.375rem}
+  .h3{font-size:1.0625rem}
+  table{min-width:520px}
+  .scroll-hint{display:block}
+}
+
+/* ---------------- 降低动效 ---------------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  html{scroll-behavior:auto}
+}
