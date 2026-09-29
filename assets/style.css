@@ -181,7 +181,31 @@ a{color:inherit}
 .hit mark{background:rgba(233,181,60,.55);color:var(--ink);border-radius:3px;padding:0 2px}
 .hit--empty{margin:0;padding:14px;font-size:1rem;color:var(--ink-2);line-height:1.7}
 
-/* 导航：道次轨 */
+/* 导航：专题 → 分组 → 条目 */
+.nav-topic{
+  margin:16px 12px 4px;
+  padding:12px 8px 0;
+  border-top:2px solid var(--deep);
+}
+.nav-topic--first{margin-top:4px}
+.nav-topic__name{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:.86rem;
+  font-weight:700;
+  line-height:1.5;
+  color:var(--deep);
+  letter-spacing:.01em;
+}
+.nav-topic__note{
+  margin:3px 0 0;
+  font-size:.72rem;
+  line-height:1.5;
+  color:var(--ink-3);
+}
+.nav-topic + .nav-group{margin-top:8px}
+.nav-topic + .nav-group > .nav-group__title{border-top:0;padding-top:2px}
+
 .nav-groups{margin-bottom:10px}
 .nav-group{margin-bottom:14px}
 .nav-group__title{

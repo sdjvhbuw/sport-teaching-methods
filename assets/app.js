@@ -1,5 +1,7 @@
 /* =========================================================
-   中学体育游戏教学法 · 专项分类整理   交互脚本
+   教学资料库（多专题）   交互脚本
+   专题一：中学体育游戏教学法 · 专项分类整理
+   专题二：信息技术教师招聘信息 · 2027届
    原生 JavaScript，零外部依赖，支持 file:// 直接打开
    内容层：内置轻量 Markdown 渲染器（直渲染 SITE_DATA.sections[].md 原文切片）
    ========================================================= */
@@ -13,6 +15,21 @@
   var REFS = DATA.references || [];
   var BY_ID = {};
   SECTIONS.forEach(function (s) { BY_ID[s.id] = s; });
+
+  /* 专题映射：section id → 所属专题名（由 meta.nav 派生，不新增任何文案） */
+  var TOPIC_OF = {};
+  (DATA.nav || []).forEach(function (t) {
+    if (!t || t.topic === undefined) return;
+    (t.groups || []).forEach(function (g) {
+      (g.items || []).forEach(function (id) { TOPIC_OF[id] = t.topic; });
+    });
+  });
+
+  /* 章节标签：体育章节沿用两位序号(lane)，招聘章节使用中文阶段标签(laneLabel) */
+  function laneText(sec) {
+    if (!sec) return "";
+    return sec.laneLabel || sec.lane || "";
+  }
 
   /* 源文档目录锚点 → 站内路由（依据各章节真实标题建立映射，不新增任何文字） */
   var ANCHOR_ROUTES = {};
@@ -34,6 +51,7 @@
   var inputEl = document.getElementById("searchInput");
   var resultsEl = document.getElementById("searchResults");
   var laneEl = document.getElementById("topbarLane");
+  var titleEl = document.getElementById("topbarTitle");
 
   var currentView = "";
   var booted = false;
@@ -291,7 +309,8 @@
     var out = [];
 
     out.push('<header class="sec-head">');
-    if (sec.lane) out.push('<p class="sec-lane">第 ' + esc(sec.lane) + " 道</p>");
+    var lt = laneText(sec);
+    if (lt) out.push('<p class="sec-lane">' + esc(lt) + "</p>");
     out.push('<h1 class="sec-title">' + esc(sec.h1 || sec.title) + "</h1>");
     out.push("</header>");
 
@@ -312,26 +331,49 @@
   }
 
   /* ---------------- 侧栏导航 ---------------- */
+  function navItemHtml(s) {
+    var tag = laneText(s);
+    return (
+      '<a class="nav-item" href="#/' + s.id + '" data-view="' + s.id + '">' +
+        (tag
+          ? '<span class="lane-no">' + esc(tag) + "</span>"
+          : '<span class="lane-no lane-no--none">·</span>') +
+        '<span class="lane-name">' + esc(s.title) + "</span>" +
+      "</a>"
+    );
+  }
+
   function buildNav() {
     if (navGroupsEl.getAttribute("data-built") === "1") return;
     var html = [];
-    (DATA.nav || []).forEach(function (g) {
-      html.push('<div class="nav-group">');
-      html.push('<p class="nav-group__title">' + esc(g.group) + "</p>");
-      (g.items || []).forEach(function (id) {
-        var s = BY_ID[id];
-        if (!s) return;
-        html.push(
-          '<a class="nav-item" href="#/' + s.id + '" data-view="' + s.id + '">' +
-            (s.lane
-              ? '<span class="lane-no">第 ' + esc(s.lane) + " 道</span>"
-              : '<span class="lane-no lane-no--none">附</span>') +
-            '<span class="lane-name">' + esc(s.title) + "</span>" +
-          "</a>"
-        );
+    var nav = DATA.nav || [];
+    var isTopics = !!(nav.length && nav[0] && nav[0].topic !== undefined);
+
+    function pushGroups(groups) {
+      (groups || []).forEach(function (g) {
+        html.push('<div class="nav-group">');
+        html.push('<p class="nav-group__title">' + esc(g.group) + "</p>");
+        (g.items || []).forEach(function (id) {
+          var s = BY_ID[id];
+          if (!s) return;
+          html.push(navItemHtml(s));
+        });
+        html.push("</div>");
       });
-      html.push("</div>");
-    });
+    }
+
+    if (isTopics) {
+      nav.forEach(function (t, ti) {
+        html.push('<div class="nav-topic' + (ti === 0 ? " nav-topic--first" : "") + '">');
+        html.push('<p class="nav-topic__name">' + esc(t.topic) + "</p>");
+        if (t.note) html.push('<p class="nav-topic__note">' + esc(t.note) + "</p>");
+        html.push("</div>");
+        pushGroups(t.groups);
+      });
+    } else {
+      pushGroups(nav);
+    }
+
     navGroupsEl.innerHTML = html.join("");
     navGroupsEl.setAttribute("data-built", "1");
   }
@@ -424,7 +466,12 @@
         var id = idOf(sec.id, bi);
         if (seen[id]) return;
         seen[id] = 1;
-        INDEX.push({ id: id, view: sec.id, secTitle: sec.title, text: text });
+        INDEX.push({
+          id: id,
+          view: sec.id,
+          secTitle: (TOPIC_OF[sec.id] ? TOPIC_OF[sec.id] + " · " : "") + sec.title,
+          text: text
+        });
       });
     });
     REFS.forEach(function (r) {
@@ -482,7 +529,7 @@
     }
 
     if (!hits.length) {
-      resultsEl.innerHTML = '<p class="hit hit--empty">未找到匹配条目，可换用更短的关键词，例如“垫球”“SWOT”“RPE”。</p>';
+      resultsEl.innerHTML = '<p class="hit hit--empty">未找到匹配条目，可换用更短的关键词，例如“垫球”“SWOT”“特岗”“教资”。</p>';
       resultsEl.hidden = false;
       return;
     }
@@ -555,8 +602,9 @@
     markNav(view);
     buildToc();
 
-    if (laneEl) laneEl.textContent = sec.lane ? "第 " + sec.lane + " 道" : "";
-    document.title = (sec.h1 || sec.title) + " · " + ((DATA.meta && DATA.meta.title) || "中学体育游戏教学法");
+    if (laneEl) laneEl.textContent = laneText(sec);
+    if (titleEl) titleEl.textContent = TOPIC_OF[view] || ((DATA.meta && DATA.meta.title) || "");
+    document.title = (sec.h1 || sec.title) + " · " + (TOPIC_OF[view] || ((DATA.meta && DATA.meta.title) || "教学资料库"));
     document.documentElement.setAttribute("data-view", view);
 
     var target = sub ? "ref-" + sub : pendingHighlight;
