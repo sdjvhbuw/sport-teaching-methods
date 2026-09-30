@@ -704,6 +704,33 @@ html[data-view="refs"] .layout{grid-template-columns:248px minmax(0,1fr)}
   .search__results{animation:none}
 }
 
+/* ---------------- 站内导航：首页 / 专题切换 ---------------- */
+.xnav{
+  display:flex;
+  gap:8px;
+  padding:0 16px;
+  margin:0 0 18px;
+}
+.xnav a{
+  flex:1 1 0;
+  min-width:0;
+  padding:7px 9px;
+  border:1px solid var(--rule);
+  border-radius:var(--r-sm);
+  background:var(--surface-2);
+  color:var(--ink-2);
+  font-size:.8rem;
+  line-height:1.4;
+  text-align:center;
+  text-decoration:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:border-color .16s var(--ease),color .16s var(--ease),background-color .16s var(--ease);
+}
+.xnav a:hover{border-color:var(--clay);color:var(--clay-ink);background:var(--clay-tint)}
+a.topbar__btn{text-decoration:none;display:inline-block}
+
 /* ---------------- 打印 ---------------- */
 @media print{
   .topbar,.sidebar,.toc,.progress,.scrim,.search{display:none !important}

@@ -4,53 +4,93 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>教学资料库 · 体育游戏教学法与信息技术教师招聘</title>
-<meta name="description" content="教学资料库：中学体育游戏教学法专项分类整理（9 章专项分类、54 条参考文献）+ 信息技术教师招聘信息筛选记录（2027届），面向备课与求职检索的纯静态知识站。">
+<meta name="description" content="教学资料库：中学体育游戏教学法专项分类整理（9 章专项分类、54 条参考文献）与信息技术教师招聘信息筛选记录（2027届），面向备课与求职检索的纯静态知识站。">
 <meta name="theme-color" content="#0F231C">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F231C'/%3E%3Cpath d='M6 23 L26 9' stroke='%23E9B53C' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10.5' cy='11' r='3.2' fill='none' stroke='%23E9B53C' stroke-width='2.4'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/home.css">
 </head>
-<body>
-<div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
+<body class="home">
 
-<header class="topbar">
-  <button type="button" class="topbar__btn" id="menuBtn" aria-expanded="false" aria-controls="sidebar">目录</button>
-  <span class="topbar__title" id="topbarTitle">教学资料库</span>
-  <span class="topbar__lane" id="topbarLane"></span>
+<header class="hero">
+  <span class="hero__track" aria-hidden="true"></span>
+  <span class="hero__lane" aria-hidden="true"></span>
+  <div class="wrap hero__inner">
+    <p class="hero__kicker">教学资料库 · 双专题</p>
+    <h1 class="hero__title">体育游戏教学法<br>与信息技术教师招聘</h1>
+    <p class="hero__desc">两个专题各自独立成页：一边是 9 章专项分类、54 条文献支撑的体育游戏教学法整理；一边是 2027 届信息技术教师招聘的五阶段筛选记录。选一个专题进入即可。</p>
+
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><span class="stat__num">2</span><span class="stat__label">专题</span></div>
+      <div class="stat" role="listitem"><span class="stat__num">24</span><span class="stat__label">章节</span></div>
+      <div class="stat" role="listitem"><span class="stat__num">54</span><span class="stat__label">参考文献</span></div>
+      <div class="stat" role="listitem"><span class="stat__num">233</span><span class="stat__label">篇原文提炼</span></div>
+    </div>
+  </div>
 </header>
 
-<div class="layout">
-  <nav class="sidebar" id="sidebar" aria-label="站点目录">
-    <div class="sidebar__inner">
-      <p class="sidebar__brand">教学资料库<span>体育游戏教学法 · 信息技术教师招聘</span></p>
+<main class="wrap">
+  <div class="section-head">
+    <h2>选择专题</h2>
+    <span class="section-head__rule" aria-hidden="true"></span>
+  </div>
 
-      <div class="search">
-        <label class="sr-only" for="searchInput">全站检索</label>
-        <input type="search" id="searchInput" placeholder="检索条目 / 文献：垫球、SWOT、特岗" autocomplete="off" aria-describedby="searchHint">
-        <p class="search__hint" id="searchHint">输入即检索全站条目与文献</p>
-        <div class="search__results" id="searchResults" hidden></div>
+  <div class="cards">
+    <a class="card" href="sport.html">
+      <p class="card__no">01</p>
+      <h3 class="card__title">中学体育游戏教学法</h3>
+      <p class="card__note">9 章专项分类 · 54 条文献</p>
+      <p class="card__desc">篮球、足球、排球、田径、武术、网球、民族传统体育七类专项，加上总览、证据梳理与参考文献，共 11 个章节。</p>
+      <div class="chips">
+        <span class="chip">总览</span>
+        <span class="chip">专项 · 7 类</span>
+        <span class="chip">通用</span>
+        <span class="chip">参考文献</span>
       </div>
+      <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
+    </a>
 
-      <div class="nav-groups" id="navGroups"></div>
+    <a class="card" href="hire.html">
+      <p class="card__no">02</p>
+      <h3 class="card__title">信息技术教师招聘信息</h3>
+      <p class="card__note">2027届 · 五阶段筛选记录</p>
+      <p class="card__desc">从信息源梳理到结论与行动清单的完整筛选过程，含资料索引、联系方式与报考条件画像，共 13 个章节。</p>
+      <div class="chips">
+        <span class="chip">过程记录 · 5 阶段</span>
+        <span class="chip">结论与行动</span>
+        <span class="chip">资料索引</span>
+      </div>
+      <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
+    </a>
+  </div>
 
-      <p class="sidebar__foot">专题一 文献库《游戏教学法 体育 中学.txt》<b>233</b> 篇提炼<br>专题二 教师招聘筛选记录 <b>2027届</b></p>
+  <div class="section-head">
+    <h2>使用说明</h2>
+    <span class="section-head__rule" aria-hidden="true"></span>
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3 class="note__title">站内检索</h3>
+      <p>进入任一专题后，左侧目录顶部可对<strong>本专题</strong>的章节与文献做全文关键词检索。</p>
     </div>
-  </nav>
+    <div class="note">
+      <h3 class="note__title">离线可用</h3>
+      <p>纯静态站点，无外部依赖与账号要求，本地双击 <code>index.html</code> 即可浏览全部内容。</p>
+    </div>
+    <div class="note">
+      <h3 class="note__title">内容保真</h3>
+      <p>各章正文与文献条目按源文档逐字保留，未做改写与概括。</p>
+    </div>
+  </div>
+</main>
 
-  <main class="content" id="content">
-    <article class="article" id="article"></article>
-    <noscript><p class="prose">本站为纯静态站点，需要启用 JavaScript 才能浏览。</p></noscript>
-  </main>
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <p>资料来源：《游戏教学法 体育 中学.txt》（233 篇提炼）·《教师招聘信息汇总_信息技术_2027届.md》</p>
+    <p class="foot__meta">教学资料库 · 纯静态站点</p>
+  </div>
+</footer>
 
-  <aside class="toc" aria-label="本页目录">
-    <p class="toc__title">本页目录</p>
-    <ol class="toc__list" id="tocList"></ol>
-  </aside>
-</div>
-
-<div class="scrim" id="scrim"></div>
-
-<script src="assets/data.js"></script>
-<script src="assets/app.js"></script>
 </body>
 </html>

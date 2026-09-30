@@ -590,11 +590,13 @@
 
   /* ---------------- 路由 ---------------- */
   function route() {
+    /* 兜底视图取当前数据的第一章，兼容各专题分页面（不再硬编码 overview） */
+    var DEFAULT_VIEW = (DATA.sections[0] && DATA.sections[0].id) || "overview";
     var raw = (location.hash || "").replace(/^#\/?/, "");
     var parts = raw.split("/");
-    var view = parts[0] || "overview";
+    var view = parts[0] || DEFAULT_VIEW;
     var sub = parts[1] || "";
-    if (!BY_ID[view]) { view = "overview"; sub = ""; }
+    if (!BY_ID[view]) { view = DEFAULT_VIEW; sub = ""; }
 
     var sec = BY_ID[view];
     renderSection(sec);
