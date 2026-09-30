@@ -1,6 +1,6 @@
 /* =========================================================
    教学资料库 · 首页交互
-   顶部导航 / 滚动进入 / 数字计数 / 鼠标光晕 / 回到顶部
+   顶部导航 / 滚动进入 / 数字强调 / 鼠标光晕 / 回到顶部
    ========================================================= */
 (function () {
   'use strict';
@@ -60,46 +60,20 @@
     revealItems.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- 3. 数字滚动计数 ---------- */
-  function countUp(el) {
-    var target = parseInt(el.getAttribute('data-count'), 10);
-    if (isNaN(target)) return;
-    // 含 <sup> 等子元素的，只改首个文本节点
-    var textNode = null;
-    for (var i = 0; i < el.childNodes.length; i++) {
-      if (el.childNodes[i].nodeType === 3 && el.childNodes[i].nodeValue.trim() !== '') {
-        textNode = el.childNodes[i];
-        break;
-      }
-    }
-    if (!textNode) textNode = el;
-    if (reduceMotion) { textNode.nodeValue = String(target); return; }
-
-    var start = null;
-    var dur = 1100;
-    function step(ts) {
-      if (start === null) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      textNode.nodeValue = String(Math.round(target * eased));
-      if (p < 1) requestAnimationFrame(step);
-      else textNode.nodeValue = String(target);
-    }
-    requestAnimationFrame(step);
-  }
-
-  var counters = $$('[data-count]');
-  if (!('IntersectionObserver' in window)) {
-    counters.forEach(countUp);
-  } else {
-    var cio = new IntersectionObserver(function (entries) {
+  /* ---------- 3. 数字（数值恒为 HTML 真值，仅入场位移强调） ----------
+     不做从 0 起步的计数：无论是否执行 JS、动画是否受限，首屏统计与数据带
+     始终直接显示真实数值；滚动进入的动效只作用于位移，不改变数值本身。
+     ------------------------------------------------------------------ */
+  var nums = $$('.stat__num,.number__num');
+  if (nums.length && !reduceMotion && 'IntersectionObserver' in window) {
+    var nio = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        countUp(entry.target);
-        cio.unobserve(entry.target);
+        entry.target.classList.add('is-pop');
+        nio.unobserve(entry.target);
       });
     }, { threshold: 0.4 });
-    counters.forEach(function (el) { cio.observe(el); });
+    nums.forEach(function (el) { nio.observe(el); });
   }
 
   /* ---------- 4. 卡片鼠标光晕 ---------- */

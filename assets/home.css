@@ -77,18 +77,24 @@ code{
 
 /* ================= 动效基元 ================= */
 @keyframes heroUp{
-  from{opacity:0;transform:translateY(28px)}
-  to{opacity:1;transform:none}
+  from{transform:translateY(26px)}
+  to{transform:none}
 }
+/* 数字入场强调：只做位移，数值恒为真值，不使用透明度与计数 */
+@keyframes numPop{
+  from{transform:translateY(9px) scale(.97)}
+  to{transform:none}
+}
+.stat__num.is-pop,.number__num.is-pop{animation:numPop .62s var(--ease) both}
 @keyframes drift{
   0%,100%{transform:translate3d(0,0,0) scale(1)}
   50%{transform:translate3d(-2.6%,2%,0) scale(1.07)}
 }
 @keyframes spinSlow{to{transform:rotate(360deg)}}
 @keyframes cue{
-  0%{opacity:0;transform:translateY(0)}
-  28%{opacity:1}
-  100%{opacity:0;transform:translateY(13px)}
+  0%{opacity:1;transform:translateY(0)}
+  60%{opacity:.32;transform:translateY(13px)}
+  100%{opacity:1;transform:translateY(0)}
 }
 @keyframes bandSlide{
   from{background-position:0 0}
