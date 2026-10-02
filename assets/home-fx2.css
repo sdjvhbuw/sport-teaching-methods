@@ -1,0 +1,175 @@
+/* =========================================================
+   教学资料库 · 首页特效增强层 2 (assets/home-fx2.css)
+   纯叠加层：不改动既有 DOM 契约、class 与 home.js / home-fx.js 选择器
+   - 卡片/特性块：霓虹描边流光（mask 边框 + 背景位移动画）
+   - 统计数字 hover：脉冲光晕（不使用 opacity 归零）
+   - 标题字符 hover：逐个跳动（--i 由 home-fx2.js 注入）
+   - 点击涟漪、鼠标拖尾、页脚数据光束（元素由 home-fx2.js 注入）
+   降级：prefers-reduced-motion 全部关闭；禁用 JS 时本层不产生任何内容
+   ========================================================= */
+
+/* ---------- 1. 卡片霓虹描边流光 ---------- */
+.fx2-rim{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:4;
+  padding:1.6px;
+  opacity:0;
+  transition:opacity .3s ease;
+  background:linear-gradient(115deg,
+      transparent 16%,
+      rgba(0,212,255,.95) 36%,
+      rgba(168,85,247,.95) 52%,
+      transparent 74%) 0 0/280% 100% no-repeat;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;
+}
+.card:hover .fx2-rim,
+.feature:hover .fx2-rim,
+.note:hover .fx2-rim{opacity:1;animation:fx2Rim 2.6s linear infinite}
+@keyframes fx2Rim{
+  from{background-position:0% 0}
+  to{background-position:280% 0}
+}
+
+/* 卡片内部：跟随鼠标的细网格点阵（由 --mx/--my 驱动，默认不显示） */
+.fx2-mesh{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity .4s var(--ease);
+  background-image:
+    radial-gradient(320px 220px at var(--mx,50%) var(--my,50%),rgba(0,212,255,.16),transparent 70%),
+    linear-gradient(rgba(0,212,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,85,247,.07) 1px,transparent 1px);
+  background-size:100% 100%,26px 26px,26px 26px;
+}
+.card:hover .fx2-mesh,.feature:hover .fx2-mesh{opacity:1}
+
+/* ---------- 2. 数字 hover 脉冲 ---------- */
+.stat:hover .stat__num,
+.number:hover .number__num{
+  animation:fx2NumPulse .92s ease-in-out infinite alternate;
+  color:#EAFBFF;
+}
+@keyframes fx2NumPulse{
+  from{text-shadow:0 0 10px rgba(0,212,255,.55)}
+  to{text-shadow:0 0 26px rgba(0,212,255,.95),0 0 46px rgba(168,85,247,.6)}
+}
+.stat:hover .stat__label,.number:hover .number__label{color:var(--cyan)}
+
+/* ---------- 3. 标题字符 hover 跳动 ---------- */
+.hero__title:hover .ch{
+  animation:fx2ChHop .62s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:calc(var(--i,0) * 24ms);
+}
+@keyframes fx2ChHop{
+  0%{transform:translateY(0)}
+  42%{transform:translateY(-9px)}
+  100%{transform:translateY(0)}
+}
+
+/* ---------- 4. 点击涟漪 ---------- */
+.fx2-ripple{
+  position:fixed;
+  left:0;
+  top:0;
+  width:14px;
+  height:14px;
+  margin:-7px 0 0 -7px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  border:2px solid rgba(0,212,255,.85);
+  box-shadow:0 0 18px rgba(0,212,255,.65),inset 0 0 12px rgba(168,85,247,.5);
+  animation:fx2Ripple .88s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.fx2-ripple--violet{
+  border-color:rgba(168,85,247,.85);
+  box-shadow:0 0 18px rgba(168,85,247,.65),inset 0 0 12px rgba(0,212,255,.5);
+  animation-delay:.09s;
+}
+@keyframes fx2Ripple{
+  0%{transform:scale(.35);opacity:1}
+  70%{opacity:.55}
+  100%{transform:scale(13);opacity:0}
+}
+
+/* ---------- 5. 鼠标拖尾星点 ---------- */
+.fx2-trail{
+  position:fixed;
+  left:0;
+  top:0;
+  width:6px;
+  height:6px;
+  margin:-3px 0 0 -3px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9997;
+  background:radial-gradient(circle,rgba(0,212,255,.95),rgba(168,85,247,.35) 60%,transparent 72%);
+  animation:fx2Trail .78s ease-out forwards;
+}
+@keyframes fx2Trail{
+  0%{transform:scale(1);opacity:.9}
+  100%{transform:scale(.2) translateY(8px);opacity:0}
+}
+
+/* ---------- 6. 页脚数据光束 ---------- */
+.fx2-foot-glow{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,.9),rgba(168,85,247,.9),transparent);
+  background-size:40% 100%;
+  background-repeat:no-repeat;
+  animation:fx2FootBeam 6.5s linear infinite;
+}
+.fx2-foot-beam{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.5;
+}
+.fx2-foot-beam::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:220px;
+  background:linear-gradient(100deg,transparent,rgba(0,212,255,.10),rgba(168,85,247,.10),transparent);
+  animation:fx2FootSweep 9s ease-in-out infinite;
+}
+@keyframes fx2FootBeam{
+  from{background-position:-40% 0}
+  to{background-position:140% 0}
+}
+@keyframes fx2FootSweep{
+  0%{transform:translateX(-260px)}
+  55%{transform:translateX(calc(100vw + 260px))}
+  100%{transform:translateX(calc(100vw + 260px))}
+}
+
+/* ---------- 7. 区块标题 hover 霓虹加重 ---------- */
+.section-head h2:hover{text-shadow:0 0 22px rgba(0,212,255,.45)}
+.chip:hover{
+  box-shadow:0 0 0 1px rgba(0,212,255,.45),0 0 18px rgba(0,212,255,.35);
+  color:#EAFBFF;
+}
+
+/* ---------- 降级 ---------- */
+@media (prefers-reduced-motion: reduce){
+  .fx2-rim,.fx2-mesh,.fx2-ripple,.fx2-trail,.fx2-foot-glow,.fx2-foot-beam{display:none !important}
+  .hero__title:hover .ch{animation:none}
+  .stat:hover .stat__num,.number:hover .number__num{animation:none}
+}
