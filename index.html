@@ -10,6 +10,8 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2304060D'/%3E%3Cpath d='M6 23 L26 9' stroke='%2300D4FF' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10.5' cy='11' r='3.2' fill='none' stroke='%23A855F7' stroke-width='2.4'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/home.css">
 <link rel="stylesheet" href="assets/home-fx2.css">
+<link rel="stylesheet" href="assets/site-nav.css">
+<link rel="stylesheet" href="assets/topic-carousel.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="home">
@@ -30,6 +32,10 @@
       <a href="#numbers">内容规模</a>
       <a href="#guide">使用说明</a>
     </nav>
+    <a class="nav__login" href="login.html" aria-label="登录或注册账号">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>登录</span>
+    </a>
     <a class="nav__cta" href="#topics">进入专题</a>
     <button type="button" class="nav__burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="展开导航">
       <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
@@ -90,33 +96,50 @@
       <span class="section-head__hint">02 TOPICS</span>
     </div>
 
-    <div class="cards">
-      <a class="card reveal" href="sport.html">
-        <p class="card__no">01</p>
-        <h3 class="card__title">中学体育游戏教学法</h3>
-        <p class="card__note">11 章 · 7 类专项 · 54 条文献</p>
-        <p class="card__desc">篮球、足球、排球、田径、武术、网球、民族传统体育 7 类专项，加上概览、通用方法体系、实证效果汇总与参考文献，共 11 个章节。</p>
-        <div class="chips">
-          <span class="chip">总览</span>
-          <span class="chip">专项 · 7 类</span>
-          <span class="chip">通用</span>
-          <span class="chip">参考文献</span>
-        </div>
-        <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
-      </a>
+    <div class="topic-carousel reveal" id="topicCarousel" role="group" aria-roledescription="轮播" aria-label="专题轮播">
+      <div class="topic-carousel__viewport">
+        <div class="cards topic-carousel__track" data-carousel-track>
 
-      <a class="card reveal" href="hire.html">
-        <p class="card__no">02</p>
-        <h3 class="card__title">信息技术教师招聘信息</h3>
-        <p class="card__note">2027届 · 五阶段筛选记录</p>
-        <p class="card__desc">从信息源梳理到结论与行动清单的完整筛选过程，含资料索引、联系方式与报考条件画像，共 13 个章节。</p>
-        <div class="chips">
-          <span class="chip">过程记录 · 5 阶段</span>
-          <span class="chip">结论与行动</span>
-          <span class="chip">资料索引</span>
+          <a class="card topic-carousel__slide" href="sport.html" data-carousel-slide>
+            <p class="card__no">01</p>
+            <h3 class="card__title">中学体育游戏教学法</h3>
+            <p class="card__note">11 章 · 7 类专项 · 54 条文献</p>
+            <p class="card__desc">篮球、足球、排球、田径、武术、网球、民族传统体育 7 类专项，加上概览、通用方法体系、实证效果汇总与参考文献，共 11 个章节。</p>
+            <div class="chips">
+              <span class="chip">总览</span>
+              <span class="chip">专项 · 7 类</span>
+              <span class="chip">通用</span>
+              <span class="chip">参考文献</span>
+            </div>
+            <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
+          </a>
+
+          <a class="card topic-carousel__slide" href="hire.html" data-carousel-slide>
+            <p class="card__no">02</p>
+            <h3 class="card__title">信息技术教师招聘信息</h3>
+            <p class="card__note">2027届 · 五阶段筛选记录</p>
+            <p class="card__desc">从信息源梳理到结论与行动清单的完整筛选过程，含资料索引、联系方式与报考条件画像，共 13 个章节。</p>
+            <div class="chips">
+              <span class="chip">过程记录 · 5 阶段</span>
+              <span class="chip">结论与行动</span>
+              <span class="chip">资料索引</span>
+            </div>
+            <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
+          </a>
+
         </div>
-        <span class="card__cta">进入专题<i aria-hidden="true">→</i></span>
-      </a>
+      </div>
+
+      <div class="topic-carousel__nav">
+        <button type="button" class="topic-carousel__arrow" data-carousel-prev aria-label="上一个专题">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="topic-carousel__dots" data-carousel-dots role="group" aria-label="选择专题"></div>
+        <button type="button" class="topic-carousel__arrow" data-carousel-next aria-label="下一个专题">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="topic-carousel__progress" aria-hidden="true"><i data-carousel-bar></i></div>
     </div>
   </section>
 
@@ -254,5 +277,6 @@
 <script src="assets/home.js"></script>
 <script src="assets/home-fx.js"></script>
 <script src="assets/home-fx2.js"></script>
+<script src="assets/topic-carousel.js"></script>
 </body>
 </html>

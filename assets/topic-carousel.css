@@ -1,0 +1,163 @@
+/* =========================================================
+   教学资料库 · 首页专题轮播（assets/topic-carousel.css）
+   对象：#topics 下「中学体育游戏教学法 / 信息技术教师招聘信息」两板块
+   ---------------------------------------------------------
+   渐进增强策略：
+   - 只有 topic-carousel.js 正常运行并给容器加上 .is-carousel 后，
+     .cards 才会切换为轮播轨道、控制条才会出现
+   - JS 未执行 / 执行失败时：.cards 保持 home.css 原有双列网格，
+     两个专题完整可读可点，不会出现被裁切的半截卡片
+   - 不新增/删改卡片内部 DOM，仅包裹视口与追加控制条
+   - prefers-reduced-motion：过渡时长由 home.css 全局降级为瞬时，
+     同时隐藏自动轮播进度条；自动轮播由 JS 侧关闭
+   ========================================================= */
+
+.topic-carousel{position:relative}
+
+/* 视口：上下留出卡片悬浮位移与霓虹投影的空间，左右 6px 供焦点圈/发光描边
+   完整显示（卡片仍有 overflow:hidden，故不会被裁切出半张）；
+   用负外边距抵消占位，使轮播与上方栏目的左右对齐保持不变 */
+.topic-carousel.is-carousel .topic-carousel__viewport{
+  position:relative;
+  overflow:hidden;
+  padding:18px 6px 34px;
+  margin:-18px -6px -34px;
+}
+
+/* 轨道：复用 .cards 元素，仅覆盖布局方式 */
+.topic-carousel.is-carousel .topic-carousel__track{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:0;
+  margin:0;
+  padding:0;
+  transform:translate3d(0,0,0);
+  transition:transform .62s var(--ease);
+  will-change:transform;
+  touch-action:pan-y;
+}
+.topic-carousel.is-carousel .topic-carousel__track.is-dragging{transition:none}
+.topic-carousel.is-carousel .topic-carousel__track.is-dragging .topic-carousel__slide{
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+/* 单张幻灯片：铺满视口 */
+.topic-carousel.is-carousel .topic-carousel__slide{
+  flex:0 0 100%;
+  min-width:100%;
+  max-width:100%;
+}
+
+/* ---------------- 控制条（仅 JS 下显示） ---------------- */
+.topic-carousel__nav{display:none}
+
+.topic-carousel.is-carousel .topic-carousel__nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  margin-top:22px;
+}
+
+.topic-carousel__arrow{
+  flex:0 0 auto;
+  width:42px;
+  height:42px;
+  padding:0;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--rule);
+  border-radius:50%;
+  background:rgba(14,22,42,.72);
+  color:var(--cyan);
+  cursor:pointer;
+  box-shadow:inset 0 0 14px rgba(0,212,255,.10);
+  transition:color .3s var(--ease),border-color .3s var(--ease),
+             background-color .3s var(--ease),box-shadow .3s var(--ease),
+             transform .3s var(--ease);
+}
+.topic-carousel__arrow svg{width:17px;height:17px;display:block}
+.topic-carousel__arrow:hover{
+  color:#fff;
+  border-color:rgba(0,212,255,.72);
+  background:rgba(0,212,255,.14);
+  box-shadow:0 0 22px -6px rgba(0,212,255,.95);
+  transform:translateY(-1px);
+}
+.topic-carousel__arrow:active{transform:translateY(0) scale(.96)}
+
+.topic-carousel__dots{display:flex;align-items:center;gap:10px}
+
+.topic-carousel__dot{
+  position:relative;
+  width:11px;
+  height:11px;
+  padding:0;
+  border:1px solid var(--rule-strong);
+  border-radius:99px;
+  background:rgba(0,212,255,.10);
+  cursor:pointer;
+  transition:width .42s var(--ease),background-color .34s var(--ease),
+             border-color .34s var(--ease),box-shadow .34s var(--ease);
+}
+/* 扩大点击热区（视觉尺寸不变） */
+.topic-carousel__dot::before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:99px;
+}
+.topic-carousel__dot:hover{
+  border-color:rgba(0,212,255,.78);
+  background:rgba(0,212,255,.26);
+}
+.topic-carousel__dot[aria-current="true"]{
+  width:30px;
+  border-color:transparent;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  box-shadow:0 0 16px -2px rgba(0,212,255,.95);
+}
+
+/* ---------------- 自动轮播进度条（纯装饰） ---------------- */
+.topic-carousel__progress{
+  display:none;
+  width:100%;
+  max-width:220px;
+  height:2px;
+  margin:16px auto 0;
+  border-radius:99px;
+  background:rgba(0,212,255,.14);
+  overflow:hidden;
+}
+.topic-carousel.is-carousel .topic-carousel__progress{display:block}
+.topic-carousel__progress i{
+  display:block;
+  width:100%;
+  height:100%;
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  animation:carouselBar var(--dur,6.4s) linear forwards;
+}
+@keyframes carouselBar{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+.topic-carousel.is-paused .topic-carousel__progress i{animation-play-state:paused}
+
+/* ---------------- 动效降级 ---------------- */
+@media (prefers-reduced-motion: reduce){
+  /* 自动轮播在 JS 侧已关闭，此处同步移除进度条与手动切换过渡 */
+  .topic-carousel.is-carousel .topic-carousel__progress{display:none}
+  .topic-carousel.is-carousel .topic-carousel__track{transition:none}
+  .topic-carousel__arrow:hover,
+  .topic-carousel__arrow:active{transform:none}
+}
+
+@media (max-width:768px){
+  .topic-carousel.is-carousel .topic-carousel__viewport{padding:14px 6px 26px;margin:-14px -6px -26px}
+  .topic-carousel__arrow{width:38px;height:38px}
+  .topic-carousel.is-carousel .topic-carousel__nav{gap:12px;margin-top:18px}
+  .topic-carousel__progress{max-width:160px;margin-top:13px}
+}

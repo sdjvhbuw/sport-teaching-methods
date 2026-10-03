@@ -1,0 +1,53 @@
+/* =========================================================
+   教学资料库 · 顶栏登录入口（index.html / login.html 共用）
+   纯新增：只定义 .nav__login，不改动任何既有选择器与布局规则
+   视觉令牌全部取自 assets/home.css 的 :root
+   ========================================================= */
+
+.nav__login{
+  position:relative;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 16px;
+  border:1px solid var(--rule-strong);
+  border-radius:99px;
+  background:rgba(0,212,255,.07);
+  color:var(--ink);
+  font-size:.85rem;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.02em;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:inset 0 0 16px rgba(0,212,255,.10);
+  transition:color .3s var(--ease),border-color .3s var(--ease),
+             background-color .3s var(--ease),box-shadow .3s var(--ease),
+             transform .3s var(--ease);
+}
+.nav__login svg{width:15px;height:15px;flex:0 0 auto;display:block}
+.nav__login:hover{
+  color:#fff;
+  border-color:rgba(0,212,255,.80);
+  background:rgba(0,212,255,.16);
+  box-shadow:0 0 24px -6px rgba(0,212,255,.95),inset 0 0 18px rgba(168,85,247,.20);
+  transform:translateY(-1px);
+}
+/* 当前页（登录页自身）高亮态 */
+.nav__login[aria-current="page"]{
+  border-color:rgba(168,85,247,.70);
+  background:linear-gradient(120deg,rgba(0,212,255,.16),rgba(168,85,247,.22));
+  color:#fff;
+}
+
+@media (max-width:860px){
+  /* 窄屏压实顶栏间距，避免品牌 + 登录 + 进入专题 + 汉堡按钮挤出横向滚动 */
+  .nav__inner{gap:12px}
+  .nav__login{padding:8px 13px;font-size:.8rem}
+}
+@media (max-width:480px){
+  /* 极窄屏只保留图标（aria-label 保留无障碍名称） */
+  .nav__login{padding:9px 11px}
+  .nav__login span{display:none}
+}

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 / 注册 · 教学资料库</title>
+<meta name="description" content="教学资料库账号入口：登录或注册，用于记录专题页的浏览量、点赞量等动态数据。当前为纯前端演示版本。">
+<meta name="theme-color" content="#04060D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2304060D'/%3E%3Cpath d='M6 23 L26 9' stroke='%2300D4FF' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10.5' cy='11' r='3.2' fill='none' stroke='%23A855F7' stroke-width='2.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/home.css">
+<link rel="stylesheet" href="assets/home-fx2.css">
+<link rel="stylesheet" href="assets/site-nav.css">
+<link rel="stylesheet" href="assets/login.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="home auth-page">
+
+<div class="scroll-progress" aria-hidden="true"><span id="scrollBar"></span></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M6 23 L26 9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="10.5" cy="11" r="3.2" stroke="currentColor" stroke-width="2.4"/></svg>
+      </span>
+      <span class="brand__text">教学资料库<em>Teaching Library</em></span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="主导航">
+      <a href="index.html#topics">专题</a>
+      <a href="index.html#features">组织方式</a>
+      <a href="index.html#numbers">内容规模</a>
+      <a href="index.html#guide">使用说明</a>
+    </nav>
+    <a class="nav__login" href="login.html" aria-current="page" aria-label="登录或注册账号">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>登录</span>
+    </a>
+    <a class="nav__cta" href="index.html#topics">进入专题</a>
+    <button type="button" class="nav__burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="展开导航">
+      <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+    </button>
+  </div>
+</header>
+
+<main class="auth" id="auth">
+  <span class="auth__bg" aria-hidden="true"></span>
+
+  <div class="wrap auth__wrap">
+
+    <!-- ============ 左侧说明 ============ -->
+    <div class="auth__intro">
+      <p class="auth__kicker"><i aria-hidden="true"></i>ACCOUNT · 账号入口</p>
+      <h1 class="auth__title">登录后记录你的<b>浏览与点赞</b></h1>
+      <p class="auth__desc">账号用于把专题页的浏览量、点赞量等动态数据归到你的名下。本页为纯前端演示版本：表单只在本机完成校验与提示，接入后端数据库后即可正式注册与登录。</p>
+
+      <ul class="auth__points">
+        <li>登录与注册<b>双表单</b>，邮箱、密码在前端即时校验并给出具体原因</li>
+        <li>密码支持<b>显隐切换</b>，注册时附带密码强度提示</li>
+        <li>「记住我」只在本机保存<b>邮箱</b>，<b>不保存密码</b></li>
+        <li>提交后给出<b>进行中 / 成功 / 失败</b>的状态反馈，便于后续对接接口</li>
+      </ul>
+
+      <a class="auth__back" href="index.html"><span aria-hidden="true">←</span> 返回首页浏览两个专题</a>
+    </div>
+
+    <!-- ============ 右侧表单面板 ============ -->
+    <div class="auth-panel" id="authPanel">
+
+      <div class="auth-panel__head">
+        <div>
+          <h2 class="auth-panel__title">账号中心</h2>
+          <p class="auth-panel__sub">选择登录或注册，全部校验在本机完成</p>
+        </div>
+        <span class="auth-panel__badge">DEMO · 前端</span>
+      </div>
+
+      <div class="auth-tabs" role="tablist" aria-label="登录或注册">
+        <button type="button" class="auth-tab" role="tab" id="tabLogin" data-auth-tab="login" aria-controls="authLogin" aria-selected="true">登录</button>
+        <button type="button" class="auth-tab" role="tab" id="tabRegister" data-auth-tab="register" aria-controls="authRegister" aria-selected="false" tabindex="-1">注册</button>
+      </div>
+
+      <!-- ---------- 登录表单 ---------- -->
+      <div id="authLogin" role="tabpanel" aria-labelledby="tabLogin">
+        <form class="auth-form" data-auth-form="login" novalidate>
+
+          <div class="field">
+            <div class="field__top">
+              <label class="field__label" for="loginEmail">邮箱地址</label>
+              <span class="field__hint">name@example.com</span>
+            </div>
+            <div class="field__ctrl">
+              <input class="field__input" id="loginEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="请输入邮箱地址" required>
+            </div>
+            <p class="field__err" id="loginEmailErr" hidden>请输入邮箱地址</p>
+          </div>
+
+          <div class="field field--pw">
+            <div class="field__top">
+              <label class="field__label" for="loginPassword">密码</label>
+              <span class="field__hint">至少 8 位</span>
+            </div>
+            <div class="field__ctrl">
+              <input class="field__input" id="loginPassword" type="password" autocomplete="current-password" placeholder="请输入密码" required>
+              <button type="button" class="field__eye" data-eye="loginPassword" aria-pressed="false" aria-label="显示密码">
+                <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.1"/></svg>
+                <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16"/><path d="M9.9 5.8A9.7 9.7 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a18.4 18.4 0 0 1-3.4 4.1"/><path d="M6.3 8.1A17.8 17.8 0 0 0 2 12s3.6 6.5 10 6.5c1 0 1.9-.15 2.7-.4"/><path d="M9.9 9.9a3.1 3.1 0 0 0 4.2 4.2"/></svg>
+              </button>
+            </div>
+            <p class="field__err" id="loginPasswordErr" hidden>请输入密码</p>
+          </div>
+
+          <div class="auth-form__row">
+            <label class="check" for="loginRemember">
+              <input type="checkbox" id="loginRemember" name="remember">
+              <span>记住我（仅保存邮箱，不保存密码）</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary auth-submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="auth-submit__label">登录</span>
+          </button>
+
+          <p class="auth-note" id="localStats">本机浏览记录：统计中…</p>
+        </form>
+      </div>
+
+      <!-- ---------- 注册表单 ---------- -->
+      <div id="authRegister" role="tabpanel" aria-labelledby="tabRegister" hidden>
+        <form class="auth-form" data-auth-form="register" novalidate>
+
+          <div class="field">
+            <div class="field__top">
+              <label class="field__label" for="regEmail">邮箱地址</label>
+              <span class="field__hint">用于登录</span>
+            </div>
+            <div class="field__ctrl">
+              <input class="field__input" id="regEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="请输入邮箱地址" required>
+            </div>
+            <p class="field__err" id="regEmailErr" hidden>请输入邮箱地址</p>
+          </div>
+
+          <div class="field field--pw">
+            <div class="field__top">
+              <label class="field__label" for="regPassword">设置密码</label>
+              <span class="field__hint">8–64 位</span>
+            </div>
+            <div class="field__ctrl">
+              <input class="field__input" id="regPassword" type="password" autocomplete="new-password" placeholder="请设置 8 位以上密码" required>
+              <button type="button" class="field__eye" data-eye="regPassword" aria-pressed="false" aria-label="显示密码">
+                <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.1"/></svg>
+                <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16"/><path d="M9.9 5.8A9.7 9.7 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a18.4 18.4 0 0 1-3.4 4.1"/><path d="M6.3 8.1A17.8 17.8 0 0 0 2 12s3.6 6.5 10 6.5c1 0 1.9-.15 2.7-.4"/><path d="M9.9 9.9a3.1 3.1 0 0 0 4.2 4.2"/></svg>
+              </button>
+            </div>
+            <div class="pw-meter" id="pwMeter">
+              <div class="pw-meter__bars" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span class="pw-meter__text">强度：至少 8 位，建议混合大小写、数字与符号</span>
+            </div>
+            <p class="field__err" id="regPasswordErr" hidden>请输入密码</p>
+          </div>
+
+          <div class="field field--pw">
+            <div class="field__top">
+              <label class="field__label" for="regConfirm">确认密码</label>
+              <span class="field__hint">再输入一次</span>
+            </div>
+            <div class="field__ctrl">
+              <input class="field__input" id="regConfirm" type="password" autocomplete="new-password" placeholder="请再次输入密码" required>
+              <button type="button" class="field__eye" data-eye="regConfirm" aria-pressed="false" aria-label="显示密码">
+                <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.1"/></svg>
+                <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16"/><path d="M9.9 5.8A9.7 9.7 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a18.4 18.4 0 0 1-3.4 4.1"/><path d="M6.3 8.1A17.8 17.8 0 0 0 2 12s3.6 6.5 10 6.5c1 0 1.9-.15 2.7-.4"/><path d="M9.9 9.9a3.1 3.1 0 0 0 4.2 4.2"/></svg>
+              </button>
+            </div>
+            <p class="field__err" id="regConfirmErr" hidden>请再次输入密码以确认</p>
+          </div>
+
+          <div class="auth-form__row">
+            <label class="check" for="regAgree">
+              <input type="checkbox" id="regAgree" name="agree">
+              <span>我已阅读并同意服务条款与隐私说明</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary auth-submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="auth-submit__label">注册</span>
+          </button>
+
+          <p class="auth-note">演示模式：<b>不会向任何服务器发送账号信息</b>，也不写入 Cookie；仅在本机浏览器保存你勾选「记住我」时的邮箱。</p>
+        </form>
+      </div>
+
+      <p class="auth-status" id="authStatus" role="status" aria-live="polite" hidden></p>
+
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <p class="foot__brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M6 23 L26 9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="10.5" cy="11" r="3.2" stroke="currentColor" stroke-width="2.4"/></svg>
+        </span>
+        教学资料库
+      </p>
+      <p>面向备课与求职检索的纯静态知识站，两个专题各自独立成页、可离线浏览。</p>
+    </div>
+    <div>
+      <p class="foot__title">专题</p>
+      <ul class="foot__list">
+        <li><a href="sport.html">中学体育游戏教学法</a></li>
+        <li><a href="hire.html">信息技术教师招聘信息</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="foot__title">账号</p>
+      <ul class="foot__list">
+        <li><a href="login.html">登录 / 注册</a></li>
+        <li><a href="index.html#topics">选择专题</a></li>
+        <li><a href="index.html#guide">使用说明</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot__bar">
+    <p>资料来源：《游戏教学法 体育 中学.txt》（233 篇提炼）·《教师招聘信息汇总_信息技术_2027届.md》</p>
+    <p class="foot__meta">教学资料库 · 纯静态站点</p>
+  </div>
+</footer>
+
+<button type="button" class="totop" id="toTop" aria-label="回到顶部">↑</button>
+
+<script src="assets/home.js"></script>
+<script src="assets/home-fx2.js"></script>
+<script src="assets/login.js"></script>
+</body>
+</html>
