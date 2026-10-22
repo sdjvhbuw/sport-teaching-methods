@@ -605,8 +605,13 @@
     buildToc();
 
     if (laneEl) laneEl.textContent = laneText(sec);
-    if (titleEl) titleEl.textContent = TOPIC_OF[view] || ((DATA.meta && DATA.meta.title) || "");
-    document.title = (sec.h1 || sec.title) + " · " + (TOPIC_OF[view] || ((DATA.meta && DATA.meta.title) || "教学资料库"));
+    var topicName = TOPIC_OF[view] || ((DATA.meta && DATA.meta.title) || "");
+    if (titleEl) titleEl.textContent = topicName;
+    /* 章节标题与专题名相同时不再重复拼接（如专题首页的 h1 即专题名） */
+    var secName = sec.h1 || sec.title;
+    document.title = (secName === topicName || !topicName)
+      ? secName
+      : secName + " · " + topicName;
     document.documentElement.setAttribute("data-view", view);
 
     var target = sub ? "ref-" + sub : pendingHighlight;

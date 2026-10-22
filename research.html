@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究课题的选择 · 教学资料库</title>
+<meta name="description" content="研究课题的选择专项整理：课题类型（按目的/成果/性质）、课题来源与途径、好选题的标准、选题四原则（需要性/创造性/科学性/可行性）与选题注意事项，共 6 个章节。">
+<meta name="theme-color" content="#0F231C">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F231C'/%3E%3Cpath d='M6 23 L26 9' stroke='%23E9B53C' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10.5' cy='11' r='3.2' fill='none' stroke='%23E9B53C' stroke-width='2.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
+
+<header class="topbar">
+  <button type="button" class="topbar__btn" id="menuBtn" aria-expanded="false" aria-controls="sidebar">目录</button>
+  <span class="topbar__title" id="topbarTitle">研究课题的选择</span>
+  <span class="topbar__lane" id="topbarLane"></span>
+  <a class="topbar__btn" href="index.html">首页</a>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="站点目录">
+    <div class="sidebar__inner">
+      <p class="sidebar__brand">研究课题的选择<span>选题类型 · 来源 · 原则</span></p>
+
+      <div class="xnav">
+        <a href="index.html">← 首页</a>
+        <a href="sport.html">体育专题</a>
+        <a href="hire.html">招聘专题</a>
+      </div>
+
+      <div class="search">
+        <label class="sr-only" for="searchInput">本专题检索</label>
+        <input type="search" id="searchInput" placeholder="检索条目：课题类型、可行性、注意事项" autocomplete="off" aria-describedby="searchHint">
+        <p class="search__hint" id="searchHint">输入即检索本专题全部章节</p>
+        <div class="search__results" id="searchResults" hidden></div>
+      </div>
+
+      <div class="nav-groups" id="navGroups"></div>
+
+      <p class="sidebar__foot">源文档《研究课题的选择.md》<br>共 <b>6</b> 个章节 · 含整理说明</p>
+    </div>
+  </nav>
+
+  <main class="content" id="content">
+    <article class="article" id="article"></article>
+    <noscript><p class="prose">本站为纯静态站点，需要启用 JavaScript 才能浏览。</p></noscript>
+  </main>
+
+  <aside class="toc" aria-label="本页目录">
+    <p class="toc__title">本页目录</p>
+    <ol class="toc__list" id="tocList"></ol>
+  </aside>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<script src="assets/research-data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
