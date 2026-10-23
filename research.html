@@ -9,6 +9,32 @@
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F231C'/%3E%3Cpath d='M6 23 L26 9' stroke='%23E9B53C' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='10.5' cy='11' r='3.2' fill='none' stroke='%23E9B53C' stroke-width='2.4'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
+<style>
+/* —— 版权说明横幅（仅本页） —— */
+.notice-wrap{max-width:var(--shell);margin:0 auto 26px}
+.notice{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:16px 20px 16px 18px;
+  background:linear-gradient(100deg,var(--clay-tint),var(--surface) 55%);
+  border:1px solid rgba(180,68,44,.42);
+  border-left:5px solid var(--clay);
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
+}
+.notice__badge{
+  flex:0 0 auto;margin-top:1px;
+  font-family:var(--font-num);font-size:.72rem;letter-spacing:.12em;
+  color:#fff;background:var(--clay-ink);
+  padding:5px 10px;border-radius:999px;white-space:nowrap;
+}
+.notice__text{margin:0;font-size:.94rem;line-height:1.8;color:var(--ink)}
+.notice__text b{color:var(--clay-ink);font-weight:700}
+.notice__text .notice__sub{display:block;margin-top:2px;font-size:.86rem;color:var(--ink-3)}
+@media (max-width:640px){
+  .notice{flex-direction:column;gap:10px;padding:14px 16px}
+  .notice__text{font-size:.9rem}
+}
+</style>
 </head>
 <body>
 <div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
@@ -45,6 +71,15 @@
   </nav>
 
   <main class="content" id="content">
+    <div class="notice-wrap">
+      <div class="notice" role="note" aria-label="版权声明">
+        <span class="notice__badge">版权声明</span>
+        <p class="notice__text">
+          该知识来源于作者的恩师，<b>版权归原作者所有</b>，仅供学习参考，<b>请勿复制粘贴</b>。
+          <span class="notice__sub">禁止转载、摘编或用于任何商业用途；如需引用请注明出处并取得原作者授权。</span>
+        </p>
+      </div>
+    </div>
     <article class="article" id="article"></article>
     <noscript><p class="prose">本站为纯静态站点，需要启用 JavaScript 才能浏览。</p></noscript>
   </main>
